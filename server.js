@@ -18,23 +18,24 @@ app.all('*', (req, res) => {
     } else{
         let targetURL = req.header('Target-URL');
         // return the data without modification
-        if(targetURL){
+        if(!targetURL){
             res.send()
+        }else{
+            axios({
+                url: targetURL+ req.url, 
+                method: req.method, 
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "*",
+            }).then((response)=>{
+                if (response.status === 200) {
+                    console.log(response.status);
+                    res.send(response.data);
+                } else {
+                    console.error('Failed to fetchinng holders data:', response.status);
+                    res.send();
+                }
+            });
         }
-        axios({
-            url: targetURL+ req.url, 
-            method: req.method, 
-            'Content-Type': 'application/json;charset=UTF-8',
-            "Access-Control-Allow-Origin": "*",
-        }).then((response)=>{
-            if (response.status === 200) {
-                console.log(response.status);
-                res.send(response.data);
-            } else {
-                console.error('Failed to fetchinng holders data:', response.status);
-                res.send();
-            }
-        });
     }
 });
 
