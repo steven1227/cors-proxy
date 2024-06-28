@@ -1,16 +1,14 @@
-var express = require('express'),
-    request = require('request'),
-    bodyParser = require('body-parser'),
-    app = express();
-// const cors = require("cors");
+// packages import
+const express = require("express");
+const app = express();
+const cors = require("cors");
 const axios = require("axios");
+// enable CORS
+app.use(cors());
+// set the port on which our app wil run
 
-var myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
-console.log('Using limit: ', myLimit);
-
-app.use(bodyParser.json({limit: myLimit}));
-
-app.all('*', function (req, res, next) {
+// basic string route to prevent Glitch error
+app.all('*', (req, res) => {
     if (req.originalUrl.includes('favicon.ico')) {
         res.status(204).end()
     }
@@ -20,6 +18,9 @@ app.all('*', function (req, res, next) {
     } else{
         let targetURL = req.header('Target-URL');
         // return the data without modification
+        if(targetURL){
+            res.send()
+        }
         axios({
             url: targetURL+ req.url, 
             method: req.method, 
@@ -37,6 +38,7 @@ app.all('*', function (req, res, next) {
     }
 });
 
+// console text when app is running
 app.set('port', process.env.PORT || 3000);
 
 app.listen(app.get('port'), function () {
