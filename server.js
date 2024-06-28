@@ -2,10 +2,9 @@ var express = require('express'),
     request = require('request'),
     bodyParser = require('body-parser'),
     app = express();
-const cors = require("cors");
+// const cors = require("cors");
 const axios = require("axios");
-// enable CORS
-app.use(cors());
+
 var myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
 console.log('Using limit: ', myLimit);
 
