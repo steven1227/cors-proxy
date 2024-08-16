@@ -24,6 +24,7 @@ app.all('*', (req, res) => {
         } else {
             
          if (targetURL == "https://gmgn.ai") {
+            
                 cloudscraper.get(targetURL + req.url)
                     .then(response => {
                         const jsonResponse = JSON.parse(response);
