@@ -24,7 +24,6 @@ app.all('*', (req, res) => {
         } else {
             
          if (targetURL == "https://gmgn.ai") {
-            
                 cloudscraper.get(targetURL + req.url)
                     .then(response => {
                         const jsonResponse = JSON.parse(response);
@@ -33,7 +32,7 @@ app.all('*', (req, res) => {
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        res.send();
+                        res.send(error);
                     });
             } else {
                 cloudscraper.get(targetURL + req.url).then((response) => {
@@ -44,7 +43,7 @@ app.all('*', (req, res) => {
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        res.send();
+                        res.send(error);
                     });
                
             }
