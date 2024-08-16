@@ -4,11 +4,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "~4.4.3",
-    "request": "~2.36.0",
     "axios": "^1.7.2",
+    "body-parser": "~1.5.2",
+    "cloudscraper": "^4.6.0",
     "cors": "^2.8.5",
-     "express-formidable": "^1.2.0",
-    "body-parser": "~1.5.2"
+    "express": "~4.4.3",
+    "express-formidable": "^1.2.0"
   }
 }
