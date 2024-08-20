@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-
+const axios = require("axios");
 // 使用 stealth 插件，绕过反爬虫
 puppeteer.use(StealthPlugin());
 
@@ -73,16 +73,20 @@ app.all('*', async (req, res) => {
                 }
             } else {
                 // 针对其他 URL 的处理
-                cloudscraper.get(targetURL + req.url)
-                    .then(response => {
-                        const jsonResponse = JSON.parse(response);
-                        console.log('Response:', jsonResponse);
-                        res.send(jsonResponse);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        res.status(500).send(error);
-                    });
+                axios({
+                    url: targetURL+ req.url, 
+                    method: req.method, 
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "*",
+                }).then((response)=>{
+                    if (response.status === 200) {
+                        console.log(response.status);
+                        res.send(response.data);
+                    } else {
+                        console.error('Failed to fetchinng holders data:', response.status);
+                        res.send();
+                    }
+                });
             }
         }
     }
